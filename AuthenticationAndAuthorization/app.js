@@ -23,14 +23,21 @@ app.get('/',(req,res)=>{
         //     console.log(result);
         // });  
 
-
-    res.send("Done bro");
+        //Creating a token for cookie
+        var token = jwt.sign({ email: 'VinitSingh.dev@gmail.com' }, 'secret');
+        res.cookie("token",token);
+        res.send("Done bro");
 });
 
 app.get("/read",(req,res)=>{
     //Reading a cookie
-    console.log(req.cookies);
-    res.send("Cookie reading");
+    // console.log(req.cookies);
+    // res.send("Cookie reading");
+
+    //Reading a token
+    let data = jwt.verify(req.cookies.token, 'secret');
+    console.log(data);
+    res.send("reading token");
 })
 
 app.listen(3000);
